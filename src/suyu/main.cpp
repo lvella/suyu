@@ -1748,22 +1748,6 @@ void GMainWindow::AllowOSSleep() {
 }
 
 bool GMainWindow::LoadROM(const QString& filename, Service::AM::FrontendAppletParameters params) {
-    if (Loader::AppLoader_NRO::IdentifyType(
-            Core::GetGameFileFromPath(vfs, filename.toStdString())) != Loader::FileType::NRO) {
-        if (!CheckFirmwarePresence()) {
-            QMessageBox::critical(this, tr("Component Missing"), tr("Missing Firmware."));
-            return false;
-        }
-
-        if (!ContentManager::AreKeysPresent()) {
-            QMessageBox::warning(
-                this, tr("Encryption Keys Missing"),
-                tr("In order to use suyu you need to provide your own encryption keys. "
-                   "You can install them by going to Tools -> Install encryption keys."));
-            return false;
-        }
-    }
-
     // Shutdown previous session if the emu thread is still active...
     if (emu_thread != nullptr) {
         ShutdownGame();
